@@ -32,7 +32,7 @@ Resources:
           Properties:
             Path: /hello
             Method: get
-            RestApiId: HelloWorldApi
+            RestApiId: !Ref HelloWorldApi
   HelloWorldApi:
     Type: AWS::Serverless::Api
     Properties:
