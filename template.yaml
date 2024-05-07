@@ -49,7 +49,7 @@ Outputs:
     Value: !Join
       - ''
       - - 'https://'
-        - !Ref HelloWorldApi.ApiId
+        - !GetAtt HelloWorldApi.ApiId
         - '.execute-api.'
         - !Ref 'AWS::Region'
         - '.amazonaws.com/'
