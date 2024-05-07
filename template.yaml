@@ -14,6 +14,12 @@ Globals:
     LoggingConfig:
       LogFormat: JSON
 Resources:
+  HelloWorldApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: Dev
+      EndpointConfiguration:
+        Type: REGIONAL
   HelloWorldFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
@@ -32,6 +38,7 @@ Resources:
           Properties:
             Path: /hello
             Method: get
+            RestApiId: !Ref HelloWorldApi
 
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
@@ -39,7 +46,14 @@ Outputs:
   # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
   HelloWorldApi:
     Description: API Gateway endpoint URL for Prod stage for Hello World function
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/"
+    Value: !Join
+      - ''
+      - - 'https://'
+        - !Ref HelloWorldApi
+        - '.execute-api.'
+        - !Ref 'AWS::Region'
+        - '.amazonaws.com/'
+        - !Ref HelloWorldApi.Stage
   HelloWorldFunction:
     Description: Hello World Lambda Function ARN
     Value: !GetAtt HelloWorldFunction.Arn

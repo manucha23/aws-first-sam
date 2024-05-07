@@ -18,7 +18,7 @@ capabilities = "CAPABILITY_IAM"
 confirm_changeset = false
 s3_prefix = "sam-app"
 region = "ap-south-1"
-disable_rollback = true
+disable_rollback = false
 image_repositories = []
 
 [default.package.parameters]

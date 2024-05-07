@@ -39,9 +39,19 @@ jobs:
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - run: |
-          # trigger the tests here
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Setup JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+      - name: Packaging Jar
+        id: packaging-jar
+        shell: bash
+        run: |
+          cd HelloWorldFunction;
+          mvn clean package
 
   delete-feature:
     if: startsWith(github.event.ref, 'feature') && github.event_name == 'delete'
